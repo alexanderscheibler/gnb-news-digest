@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check Your Email / Vérifiez votre courriel – NB News Digest</title>
+  <meta name="description" content="A confirmation link has been sent to your inbox. / Un lien de confirmation a été envoyé à votre adresse courriel.">
+  <link rel="stylesheet" href="style.css">
+  <script src="lang.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to content / Passer au contenu</a>
+
+  <header class="site-header" role="banner">
+    <div class="wordmark" aria-label="NB News Digest">NB News Digest</div>
+    <div class="lang-toggle" role="group" aria-label="Language / Langue">
+      <button class="lang-btn" id="btn-en" aria-pressed="true"  onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-fr" aria-pressed="false" onclick="setLang('fr')">FR</button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="card">
+      <div class="status-block" role="region" aria-labelledby="page-title-en">
+
+        <div class="status-icon status-icon--info" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0D7C72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <polyline points="2,4 12,13 22,4"/>
+          </svg>
+        </div>
+
+        <div class="lang-en">
+          <h1 id="page-title-en">Check your inbox.</h1>
+          <div class="bilingual-block" style="margin-top:1rem;">
+            <div class="lang-row">
+              <p>We sent you a confirmation link — click it to activate your subscription.</p>
+            </div>
+            <hr class="divider-lang" aria-hidden="true">
+            <div class="lang-row">
+              <p class="note">Don't see it? Check your spam or junk folder.</p>
+            </div>
+          </div>
+          <a href="/" class="btn btn-primary btn-inline">← Back</a>
+        </div>
+
+        <div class="lang-fr" lang="fr">
+          <h1 id="page-title-fr">Vérifiez votre courriel.</h1>
+          <div class="bilingual-block" style="margin-top:1rem;">
+            <div class="lang-row">
+              <p>Nous vous avons envoyé un lien de confirmation — cliquez dessus pour activer votre abonnement.</p>
+            </div>
+            <hr class="divider-lang" aria-hidden="true">
+            <div class="lang-row">
+              <p class="note">Vous ne le trouvez pas&nbsp;? Vérifiez vos courriels indésirables.</p>
+            </div>
+          </div>
+          <a href="/" class="btn btn-primary btn-inline">← Retour</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p class="lang-en">Independent · Not affiliated with the Government of New Brunswick</p>
+    <p class="lang-fr" lang="fr">Indépendant · Sans lien avec le gouvernement du N.-B.</p>
+  </footer>
+
+</body>
+</html>

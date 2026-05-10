@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  worker:
+    image: node:26-bookworm-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "8787:8787"
+    command: sh -c "apt-get update && apt-get install -y ca-certificates && npm install && npx wrangler dev src/index.ts --local --ip 0.0.0.0"
+
+  # The Daily Scraper (Runs once and exits)
+  scraper:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    env_file:
+      - .dev.vars
+    environment:
+      - TEST_DATE=2026-05-05
+    command: sh -c "pip install -q requests beautifulsoup4 psycopg2-binary resend cryptography && python src/scraper.py"

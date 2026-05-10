@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unsubscribed / Désabonné – NB News Digest</title>
+  <meta name="description" content="You have been unsubscribed from NB News Digest. / Vous avez été désabonné du NB News Digest.">
+  <link rel="stylesheet" href="style.css">
+  <script src="lang.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to content / Passer au contenu</a>
+
+  <header class="site-header" role="banner">
+    <div class="wordmark" aria-label="NB News Digest">NB News Digest</div>
+    <div class="lang-toggle" role="group" aria-label="Language / Langue">
+      <button class="lang-btn" id="btn-en" aria-pressed="true"  onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-fr" aria-pressed="false" onclick="setLang('fr')">FR</button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="card">
+      <div class="status-block" role="region" aria-labelledby="page-title-en">
+
+        <div class="status-icon status-icon--goodbye" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#B91C1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </div>
+
+        <div class="lang-en">
+          <h1 id="page-title-en">You've been unsubscribed.</h1>
+          <p>Your email has been permanently removed from our list. You will not receive any further messages.</p>
+          <hr class="divider" aria-hidden="true">
+          <p class="note" style="font-size:0.9rem;">Changed your mind? You can subscribe again at any time.</p>
+          <a href="/" class="btn btn-primary btn-inline">Subscribe again</a>
+        </div>
+
+        <div class="lang-fr" lang="fr">
+          <h1 id="page-title-fr">Vous avez été désabonné.</h1>
+          <p>Votre courriel a été supprimé définitivement de notre liste. Vous ne recevrez plus de messages.</p>
+          <hr class="divider" aria-hidden="true">
+          <p class="note" style="font-size:0.9rem;">Vous avez changé d'avis&nbsp;? Vous pouvez vous réabonner à tout moment.</p>
+          <a href="/" class="btn btn-primary btn-inline">Se réabonner</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p class="lang-en">Independent · Not affiliated with the Government of New Brunswick</p>
+    <p class="lang-fr" lang="fr">Indépendant · Sans lien avec le gouvernement du N.-B.</p>
+  </footer>
+
+</body>
+</html>

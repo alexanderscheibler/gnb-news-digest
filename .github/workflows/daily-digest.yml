@@ -1,0 +1,31 @@
+# .github/workflows/daily-digest.yml
+name: Daily News Scraper
+on:
+  schedule:
+    - cron: '0 15 * * *' # Runs at 15:00 UTC daily
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  scrape_and_send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 psycopg2-binary resend cryptography
+
+      - name: Run Scraper
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NEON_DB_URL: ${{ secrets.NEON_DB_URL }}
+          APP_MASTER_KEY: ${{ secrets.APP_MASTER_KEY }}
+          API_URL: ${{ secrets.API_URL }}                # for unsubscribe links
+          TEST_DATE: '2026-05-05'                        # testing date, comment for using today
+        run: python scraper.py

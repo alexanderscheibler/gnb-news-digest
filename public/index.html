@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NB News Digest</title>
+  <meta name="description" content="Get a daily digest of Government of New Brunswick news headlines, delivered by email. / Recevez un résumé quotidien des nouvelles du gouvernement du Nouveau-Brunswick.">
+  <link rel="stylesheet" href="style.css">
+  <script src="lang.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to form / Passer au formulaire</a>
+
+  <header class="site-header" role="banner">
+    <div class="wordmark" aria-label="NB News Digest">NB News Digest</div>
+  </header>
+
+  <main id="main-content">
+    <div class="card" role="region" aria-labelledby="page-title-en">
+
+      <!-- Language toggle -->
+      <div class="lang-toggle" role="group" aria-label="Language / Langue">
+        <button class="lang-btn" id="btn-en" aria-pressed="true"  onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btn-fr" aria-pressed="false" onclick="setLang('fr')">FR</button>
+      </div>
+
+      <!-- === ENGLISH === -->
+      <div class="lang-en">
+        <h1 id="page-title-en">Stay informed.</h1>
+        <p class="tagline">Daily NB government headlines, free to your inbox.</p>
+
+        <form id="subscribe-form" method="POST" novalidate aria-label="Newsletter subscription form">
+          <input type="hidden" name="language" value="en">
+          <div class="form-group">
+            <label for="email-en">Email address</label>
+            <input
+              type="email" id="email-en" name="email"
+              autocomplete="email" inputmode="email"
+              required aria-required="true"
+              placeholder="you@example.com"
+            >
+          </div>
+          <div id="turnstile-container" aria-hidden="true"></div>
+          <button type="submit" class="btn btn-primary" id="submit-btn-en">Subscribe</button>
+          <p class="legal">
+            By subscribing you agree to our <a href="/tos.html">Terms of Service</a>.
+          </p>
+        </form>
+      </div>
+
+      <!-- === FRENCH === -->
+      <div class="lang-fr">
+        <h1 id="page-title-fr" lang="fr">Restez informé.</h1>
+        <p class="tagline" lang="fr">Les nouvelles du gouvernement N.-B., chaque jour, gratuitement.</p>
+
+        <form id="subscribe-form-fr" method="POST" novalidate aria-label="Formulaire d'abonnement">
+          <input type="hidden" name="language" value="fr">
+          <div class="form-group">
+            <label for="email-fr" lang="fr">Adresse courriel</label>
+            <input
+              type="email" id="email-fr" name="email"
+              autocomplete="email" inputmode="email"
+              required aria-required="true"
+              placeholder="vous@exemple.com"
+            >
+          </div>
+          <div id="turnstile-container-fr" aria-hidden="true"></div>
+          <button type="submit" class="btn btn-primary" id="submit-btn-fr" lang="fr">S'abonner</button>
+          <p class="legal" lang="fr">
+            En vous abonnant, vous acceptez nos <a href="/tos.html">conditions d'utilisation</a>.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p class="lang-en">Independent · Not affiliated with the Government of New Brunswick</p>
+    <p class="lang-fr" lang="fr">Indépendant · Sans lien avec le gouvernement du N.-B.</p>
+  </footer>
+
+  <script>
+    // === Environment config ===
+    const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const API_URL = isLocal ? 'http://localhost:8787/api/subscribe' : '/api/subscribe';
+    const TS_KEY  = isLocal ? '1x00000000000000000000AA' : '0x4AAAAAADMvbs5sGld1v4TS';
+
+    document.getElementById('subscribe-form').action    = API_URL;
+    document.getElementById('subscribe-form-fr').action = API_URL;
+
+    // === Turnstile: render each widget once, store widget ID for execute() ===
+    const tsWidgetId    = { en: null, fr: null };
+    const userSubmitted = { en: false, fr: false };
+
+    function renderTurnstile(lang) {
+      if (tsWidgetId[lang] !== null || typeof turnstile === 'undefined') return;
+      const containerId = lang === 'en' ? '#turnstile-container' : '#turnstile-container-fr';
+      const formId      = lang === 'en' ? 'subscribe-form'       : 'subscribe-form-fr';
+      tsWidgetId[lang] = turnstile.render(containerId, {
+        sitekey: TS_KEY,
+        size: 'invisible',
+        callback: () => {
+          // Only submit if the user has actually clicked the subscribe button
+          if (userSubmitted[lang]) {
+            document.getElementById(formId).submit();
+          }
+        }
+      });
+    }
+
+    // Render Turnstile for whichever language lang.js activates on load
+    window.addEventListener('load', function () {
+      renderTurnstile(document.documentElement.lang === 'fr' ? 'fr' : 'en');
+    });
+
+    // Wrap setLang so language switches also trigger Turnstile render
+    const _originalSetLang = window.setLang;
+    window.setLang = function (lang) {
+      _originalSetLang(lang);
+      renderTurnstile(lang);
+    };
+
+    // === Submit: set intent flag → disable button → execute Turnstile ===
+    [['subscribe-form', 'en', 'submit-btn-en'],
+     ['subscribe-form-fr', 'fr', 'submit-btn-fr']
+    ].forEach(([formId, lang, btnId]) => {
+      document.getElementById(formId).addEventListener('submit', function (e) {
+        e.preventDefault();
+        userSubmitted[lang] = true;
+
+        const btn = document.getElementById(btnId);
+        btn.disabled = true;
+        btn.textContent = lang === 'fr' ? 'Envoi…' : 'Sending…';
+
+        if (typeof turnstile !== 'undefined' && tsWidgetId[lang] !== null) {
+          // FIX: Reset the widget to clear any stale on-load tokens.
+          // This forces a fresh execution and guarantees the callback will fire.
+          turnstile.reset(tsWidgetId[lang]);
+          turnstile.execute(tsWidgetId[lang]);
+        } else if (typeof turnstile !== 'undefined') {
+          renderTurnstile(lang);
+        } else {
+          this.submit();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
