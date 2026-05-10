@@ -176,7 +176,7 @@ def send_digest(headlines: List[Dict[str, str]], subscribers: List[Dict[str, str
 
         # IMPORTANT: Change this back to 'news@yourdomain.com' when moving to production!
         resend.Emails.send({
-            "from": "onboarding@resend.dev",
+            "from": "news@productpassport.ca",
             "to": sub["email"],
             "subject": subject,
             "html": html_content

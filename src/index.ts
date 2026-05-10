@@ -148,7 +148,7 @@ async function handleSubscribe(request: Request, env: Env): Promise<Response> {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'onboarding@resend.dev',
+          from: 'news@productpassport.ca',
           to: rawEmail, // Plaintext used here for dispatch; disappears from memory after
           subject: lang === 'fr' ? 'Confirmez votre inscription' : 'Confirm your subscription',
           html: `<p>${emailBody}</p>`
