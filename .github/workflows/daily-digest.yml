@@ -27,5 +27,5 @@ jobs:
           NEON_DB_URL: ${{ secrets.NEON_DB_URL }}
           APP_MASTER_KEY: ${{ secrets.APP_MASTER_KEY }}
           API_URL: ${{ secrets.API_URL }}                # for unsubscribe links
-          TEST_DATE: '2026-05-05'                        # testing date, comment for using today
+          # TEST_DATE: '2026-05-05' # testing date, comment for using today
         run: python src/scraper.py
