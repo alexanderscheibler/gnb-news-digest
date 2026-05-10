@@ -3,5 +3,9 @@ main = "src/index.ts"
 compatibility_date = "2026-05-10"
 compatibility_flags = ["nodejs_compat"]
 
+[vars]
+FRONTEND_URL = "https://gnb-news-digest.appcheckwizard.workers.dev"
+API_URL = "https://gnb-news-digest.appcheckwizard.workers.dev"
+
 [assets]
 directory = "public"
