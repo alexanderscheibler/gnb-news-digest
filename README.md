@@ -2,7 +2,7 @@
 
 [![Daily News Scraper](https://github.com/alexanderscheibler/gnb-news-digest/actions/workflows/daily-digest.yml/badge.svg)](https://github.com/alexanderscheibler/gnb-news-digest/actions/workflows/daily-digest.yml)
 
-A simple service providing:
+A simple bilingual service providing:
 - User subscription through e-mail
 - Daily e-mail delivery from the news published by the Government of New Brunswick
 
