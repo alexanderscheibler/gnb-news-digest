@@ -11,3 +11,4 @@ Tech:
 - API with Cloudflare Workers (TypeScript)
 - PostgreSQL Database with Neon
 - E-mail service with Resend
+- Antibot: Cloudflare Turnstile
