@@ -2,7 +2,7 @@
 name: Daily News Scraper
 on:
   schedule:
-    - cron: '0 20 * * *' # Runs at 20:00 UTC daily (~5pm Atlantic Time)
+    - cron: '0 21 * * *' # Runs at 21:00 UTC daily (~6pm Atlantic Time)
   workflow_dispatch: # Allows manual triggering
 
 jobs:
